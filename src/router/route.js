@@ -1,0 +1,19 @@
+const express = require("express");
+const { BookAppointment } = require("../controllers/appointController");
+const { checkAvailability } = require("../middleware/auth");
+const { GetAllDailyEntry } = require("../controllers/adminController");
+
+const router = express.Router();
+
+router.get("/test-me", (req, res) => {
+  res.status(200).send("My Api is Runnging Fine");
+});
+
+router.post("/appointment", checkAvailability, BookAppointment);
+router.get("/getclient", GetAllDailyEntry);
+
+router.all("/*", (req, res) => {
+  res.status(400).send({ status: false, message: "Make Sure Your Endpoint is Correct!" });
+});
+
+module.exports = router;
