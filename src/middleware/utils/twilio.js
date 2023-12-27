@@ -22,18 +22,3 @@ SendOTP("anulMehta", "+918279241848");
 
 module.exports.SendOTP = SendOTP;
 
-
-// working fine
-// const accountSid = "AC1c91206453b5cd99b340fa40fdc146b5";
-// const authToken = "744cc53e12e1c56000d387eccd04e0db";
-// const client = require("twilio")(accountSid, authToken);
-// const SENDOTP = async () => {
-//   const messsage = await client.messages.create({
-//     body: "I am from rajatshan",
-//     from: "+17736722812",
-//     to: "+918279241848",
-//   });
-//   console.log(messsage);
-// };
-
-// console.log(SENDOTP());
