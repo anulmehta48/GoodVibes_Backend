@@ -3,6 +3,7 @@ const AppointModel = require("../models/appointModel");
 const BookAppointment = async (req,res) => {
   try {
     const appointUser=req.body
+    
     const {fullName,email,mobile,services,appointDate,appointTime,notes}=appointUser
 
     if(Object.keys(appointUser).length === 0){
@@ -16,3 +17,4 @@ const BookAppointment = async (req,res) => {
 };
 
 module.exports.BookAppointment = BookAppointment;
+
