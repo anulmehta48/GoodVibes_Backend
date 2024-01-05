@@ -6,40 +6,42 @@ const SingupAdmin=async (req,res)=>{
   const { fullName, email, mobile, password } = req.body;
   try {
     if (!fullName || !email || !mobile || !password) {
-      return res.status(400).json({ status:false,msg: 'All fields are required' });
+      return res.status(400).json({ status:false,message: 'All fields are required' });
     }
     const existingAdmin = await AdminModel.findOne({ $or: [{ email }, { mobile }] });
     if (existingAdmin) {
-      return res.status(409).json({ error: 'Email or mobile already registered' });
+      return res.status(409).json({ status:false,message: 'User already registered' });
     }
     const hashedPassword=await bcrypt.hash(password,10)
     const Admin=await AdminModel.create({fullName,email,mobile,password:hashedPassword})
     res.status(201).send({status:true,Admin:Admin})
   } catch (error) {
-    res.status(500).send({ status: false, msg: error.message });
+    res.status(500).send({ status: false, message: error.message });
   }
 }
+
+
+
 const LoginAdmin=async (req,res)=>{
   const { email, password } = req.body;
   try {
     if ( !email|| !password) {
-      return res.status(400).json({ status:false,msg: 'All fields are required' });
+      return res.status(400).json({ status:false,message: 'All fields are required' });
     }
     const existingAdmin = await AdminModel.findOne({email:email });
     if (!existingAdmin) {
-      return res.status(409).json({ error: 'Invaild email and password' });
+      return res.status(409).json({status:false, message: 'Invaild email and password' });
     }
     const isPasswordValid =await bcrypt.compare(password,existingAdmin.password)
     if (isPasswordValid) {
-      return res.status(200).json({status:true, msg: 'Login successful', });
+      return res.status(200).json({status:true, message: 'Login successful', });
     } else {
-      return res.status(401).json({ error: 'Invalid email or password' });
+      return res.status(401).json({ status:true,message: 'Invalid email or password' });
     }
   } catch (error) {
-    res.status(500).send({ status: false, msg: error.message });
+    res.status(500).send({ status: false, message: error.message });
   }
 }
-
 
 
 const GetAllDailyEntry = async (req, res) => {
@@ -47,7 +49,7 @@ const GetAllDailyEntry = async (req, res) => {
     const clients = await AppointModel.find();
     return res.status(200).send({ status: true, data: clients });
   } catch (error) {
-    res.status(500).send({ status: false, msg: error.message });
+    res.status(500).send({ status: false, message: error.message });
   }
 };
 module.exports.GetAllDailyEntry = GetAllDailyEntry;
