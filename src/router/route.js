@@ -1,7 +1,7 @@
 const express = require("express");
 const { BookAppointment } = require("../controllers/appointController");
 const { checkAvailability } = require("../middleware/auth");
-const { GetAllDailyEntry } = require("../controllers/adminController");
+const { GetAllDailyEntry, SingupAdmin, LoginAdmin } = require("../controllers/adminController");
 const { CreateEntry } = require("../controllers/dailyEntry");
 
 const router = express.Router();
@@ -13,6 +13,8 @@ router.get("/test-me", (req, res) => {
 router.post("/appointment", checkAvailability, BookAppointment);
 router.get("/getclient", GetAllDailyEntry);
 router.post("/entry",CreateEntry)
+router.post("/signup",SingupAdmin)
+router.post("/login",LoginAdmin)
 
 
 router.all("/*", (req, res) => {
